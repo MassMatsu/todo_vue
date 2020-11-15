@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dist/css/app.css">
+  <script src="https://use.fontawesome.com/e3ae05b8e6.js"></script>
+  <title>Document</title>
+</head>
+<body class="body">
+  <div class="main" id="todoApp">
+    <p class="mainTitle">vue.js todos</p>
+
+    <div class="inputArea">
+      <input type="text" class="inputText" placeholder="task to do" v-model="task" v-on:keyup.shift.enter="addTask">
+      <input type="text" class="searchBox" placeholder="keyword to search" v-model="keyword">
+    </div>
+
+    <div class="listsArea">
+      <ul class="lists">
+        <li class="list__item" v-bind:class="classObj(todo.id)" v-for="todo in filteredTodos" v-bind:key="todo.id">
+
+          <i class="fa icon-check" v-bind:class="classObjIcon(todo.id)" v-on:click="toggleDone(todo.id)"></i>
+          <span v-if="todo.isShow" v-on:click="toggleisShow(todo.id)">{{todo.title}}</span> <input class="editText" v-if="!todo.isShow" v-bind:value="todo.title" v-on:keyup.shift.enter="editTodo(todo.id, $event)"></input>
+          <i class="fa fa-trash icon-trash" v-on:click="deleteList(todo.id)"></i>
+
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <script src="src/js/uuid.js"></script>
+  <script src="dist/js/bundle.js"></script>
+</body>
+</html>
