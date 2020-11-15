@@ -5,8 +5,8 @@ new Vue({
   data: {
     task: '',
     todos: [
-      // {id: 'xx', title: 'vue.js', isDone: false, isShow: true},
-      // {id: 'xxxx', title: 'js', isDone: true, isShow: true}
+      {id: 'xx', title: 'vue.js', isDone: false, isShow: true},
+      {id: 'xxxx', title: 'js', isDone: true, isShow: true}
     ],
     keyword: ''
   },
@@ -19,7 +19,7 @@ new Vue({
       }
       this.task = ''; 
     },
-    deleteList: function(id){
+    deleteList: function(id){ // htmlでの引数はindexで良い。そうすればわざわざfindIndex()を使わなくてもよくなる
       
       const searchId = id;
       const index = this.todos.findIndex(function(todo){   // 配列の中のオブジェクトのインデックス番号をオブジェクトの一つの要素を経由して取得する
@@ -29,61 +29,41 @@ new Vue({
       console.log(index);
       this.todos.splice(index, 1);
     },
-    toggleDone: function(id){
+    toggleDone: function(todo){
 
-      const searchId = id;
-      const index = this.todos.findIndex(function(todo){
-        return todo.id === searchId;
-      });
-      this.todos[index].isDone = !this.todos[index].isDone;
+      todo.isDone = !todo.isDone;
 
-      console.log(this.todos[index].isDone)
+      console.log(todo.isDone)
     },
-    toggleisShow: function(id){
-      const searchId = id;
-      const index = this.todos.findIndex(function(todo){
-        return todo.id === searchId;
-      });
-      this.todos[index].isShow = !this.todos[index].isShow;
+    toggleisShow: function(todo){
+  
+      todo.isShow = !todo.isShow;
     },
-    editTodo: function(id, $event){
-      const searchId = id;
-      const index = this.todos.findIndex(function(todo){
-        return todo.id === searchId;
-      });
-
+    editTodo: function(todo, $event){
+    
       if($event.target.value !== ''){
-       this.todos[index].title = $event.target.value;
+      todo.title = $event.target.value;
       }
-      this.todos[index].isShow = !this.todos[index].isShow;
+      todo.isShow = !todo.isShow;
     }
 
   },
   
   computed: {
     classObjIcon: function(){
-      return function(id){    // computedオブジェクトに引数を取っているので、こういう書き方になる
+      return function(todo){    // computedオブジェクトに引数を取っているので、こういう書き方になる
 
-        const searchId = id;
-        const index = this.todos.findIndex(function(todo){
-          return todo.id === searchId;
-        });
-        //console.log('index',index);
         return {
-          "fa-check-circle": this.todos[index].isDone,
-          "fa-circle-thin": !this.todos[index].isDone
+          "fa-check-circle": todo.isDone,
+          "fa-circle-thin": !todo.isDone
         }
       }  
     },
     classObj: function(){
-      return function(id){
+      return function(todo){
 
-        const searchId = id;
-        const index = this.todos.findIndex(function(todo){
-          return todo.id === searchId;
-        });
         return {
-        "list__item-done": this.todos[index].isDone
+        "list__item-done": todo.isDone
         }
       }
     },

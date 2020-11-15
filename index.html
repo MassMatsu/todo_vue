@@ -18,11 +18,11 @@
 
     <div class="listsArea">
       <ul class="lists">
-        <li class="list__item" v-bind:class="classObj(todo.id)" v-for="todo in filteredTodos" v-bind:key="todo.id">
+        <li class="list__item" v-bind:class="classObj(todo)" v-for="todo in filteredTodos" v-bind:key="todo.id">
 
-          <i class="fa icon-check" v-bind:class="classObjIcon(todo.id)" v-on:click="toggleDone(todo.id)"></i>
-          <span v-if="todo.isShow" v-on:click="toggleisShow(todo.id)">{{todo.title}}</span> <input class="editText" v-if="!todo.isShow" v-bind:value="todo.title" v-on:keyup.shift.enter="editTodo(todo.id, $event)"></input>
-          <i class="fa fa-trash icon-trash" v-on:click="deleteList(todo.id)"></i>
+          <i class="fa icon-check" v-bind:class="classObjIcon(todo)" v-on:click="toggleDone(todo)"></i>
+          <span v-if="todo.isShow" v-on:click="toggleisShow(todo)">{{todo.title}}</span> <input class="editText" v-if="!todo.isShow" v-bind:value="todo.title" v-on:keyup.shift.enter="editTodo(todo, $event)"></input>
+          <i class="fa fa-trash icon-trash" v-on:click="deleteList(todo.id)"></i>   
 
         </li>
       </ul>

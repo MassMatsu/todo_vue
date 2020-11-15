@@ -297,10 +297,7 @@ new _vue2.default({
   el: '#todoApp',
   data: {
     task: '',
-    todos: [
-      // {id: 'xx', title: 'vue.js', isDone: false, isShow: true},
-      // {id: 'xxxx', title: 'js', isDone: true, isShow: true}
-    ],
+    todos: [{ id: 'xx', title: 'vue.js', isDone: false, isShow: true }, { id: 'xxxx', title: 'js', isDone: true, isShow: true }],
     keyword: ''
   },
 
@@ -313,6 +310,7 @@ new _vue2.default({
       this.task = '';
     },
     deleteList: function deleteList(id) {
+      // htmlでの引数はindexで良い。そうすればわざわざfindIndex()を使わなくてもよくなる
 
       var searchId = id;
       var index = this.todos.findIndex(function (todo) {
@@ -323,62 +321,42 @@ new _vue2.default({
       console.log(index);
       this.todos.splice(index, 1);
     },
-    toggleDone: function toggleDone(id) {
+    toggleDone: function toggleDone(todo) {
 
-      var searchId = id;
-      var index = this.todos.findIndex(function (todo) {
-        return todo.id === searchId;
-      });
-      this.todos[index].isDone = !this.todos[index].isDone;
+      todo.isDone = !todo.isDone;
 
-      console.log(this.todos[index].isDone);
+      console.log(todo.isDone);
     },
-    toggleisShow: function toggleisShow(id) {
-      var searchId = id;
-      var index = this.todos.findIndex(function (todo) {
-        return todo.id === searchId;
-      });
-      this.todos[index].isShow = !this.todos[index].isShow;
+    toggleisShow: function toggleisShow(todo) {
+
+      todo.isShow = !todo.isShow;
     },
-    editTodo: function editTodo(id, $event) {
-      var searchId = id;
-      var index = this.todos.findIndex(function (todo) {
-        return todo.id === searchId;
-      });
+    editTodo: function editTodo(todo, $event) {
 
       if ($event.target.value !== '') {
-        this.todos[index].title = $event.target.value;
+        todo.title = $event.target.value;
       }
-      this.todos[index].isShow = !this.todos[index].isShow;
+      todo.isShow = !todo.isShow;
     }
 
   },
 
   computed: {
     classObjIcon: function classObjIcon() {
-      return function (id) {
+      return function (todo) {
         // computedオブジェクトに引数を取っているので、こういう書き方になる
 
-        var searchId = id;
-        var index = this.todos.findIndex(function (todo) {
-          return todo.id === searchId;
-        });
-        //console.log('index',index);
         return {
-          "fa-check-circle": this.todos[index].isDone,
-          "fa-circle-thin": !this.todos[index].isDone
+          "fa-check-circle": todo.isDone,
+          "fa-circle-thin": !todo.isDone
         };
       };
     },
     classObj: function classObj() {
-      return function (id) {
+      return function (todo) {
 
-        var searchId = id;
-        var index = this.todos.findIndex(function (todo) {
-          return todo.id === searchId;
-        });
         return {
-          "list__item-done": this.todos[index].isDone
+          "list__item-done": todo.isDone
         };
       };
     },
